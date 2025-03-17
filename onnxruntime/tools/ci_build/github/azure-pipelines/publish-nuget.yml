@@ -1,0 +1,31 @@
+resources:
+  pipelines:
+  - pipeline: build
+    source: 'Zip-Nuget-Java-Nodejs Packaging Pipeline'
+    trigger:
+      branches:
+        include:
+        - main
+        - rel-*
+    branch: main
+
+stages:
+  - template: templates/publish-nuget-steps.yml
+    parameters:
+      stage_name: 'Publish_NuGet_Packag_And_Report'
+      include_cpu_ep: true
+      download_artifacts_steps:
+        - download: build
+          displayName: 'Download Pipeline Artifact - Signed NuGet Package'
+          artifact: 'drop-signed-nuget-dml'
+        - script: move "$(Pipeline.Workspace)\build\drop-signed-nuget-dml\*" $(Build.BinariesDirectory)\nuget-artifact\final-package
+
+        - download: build
+          displayName: 'Download Pipeline Artifact - Signed NuGet Package'
+          artifact: 'drop-signed-nuget-Training-CPU'
+        - script: move "$(Pipeline.Workspace)\build\drop-signed-nuget-Training-CPU\*" $(Build.BinariesDirectory)\nuget-artifact\final-package
+
+        - download: build
+          displayName: 'Download Pipeline Artifact - Signed NuGet Package'
+          artifact: 'drop-signed-nuget-GPU'
+        - script: move "$(Pipeline.Workspace)\build\drop-signed-nuget-GPU\*" $(Build.BinariesDirectory)\nuget-artifact\final-package
