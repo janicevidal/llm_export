@@ -11,3 +11,8 @@ onnxruntime库在 10.10.70.12:/home/xiaoshuai.zhang/onnxruntime 源码做了修�
 
 算子手动删减 python onnx_delete_node.py
 算子重命名、张量信息添加 python onnx_rename_paralle.py
+
+
+onnx_llm
+库
+https://github.com/wangzhaode/llm-export/tree/86387abf340cd3d184df8e5acc88aa598b13b9fc 
